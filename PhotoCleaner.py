@@ -5,6 +5,7 @@
 
 # Written by Casey Gierke of AlbuGierke Environmental Solutions
 # Updated 2018-05-08
+# Updated 2018-08-20
 
 # -------------------------------------------------
 # IMPORTS
@@ -42,12 +43,13 @@ dir_path = os.path.abspath(os.path.dirname(__file__))
 
 # Name base folder
 base = 'iPhone Files'
-base = 'test II'
+base = 'Test'
 
 src_dir = dir_path+os.sep+base+os.sep
 
 # Get path to iPhone photo files
 Files = glob.glob(src_dir+'*.jpg*')
+Files = glob.glob(src_dir+'*.mts*')
 if Files == []:
 	# Get path from user
 	Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
@@ -99,28 +101,47 @@ for movfile in glob.iglob(os.path.join(src_dir+os.sep, "*.mov")):
 		shutil.copy(movfile, not_dir)
 		
 for mp4file in glob.iglob(os.path.join(src_dir+os.sep, "*.mp4")):
-# for movfile in glob.iglob(os.path.join(src_dir, "*/*.mov")):
-    if os.path.exists(dst_dir+os.path.basename(os.path.normpath(mp4file))) == False:
-		print('Copying '+mp4file[find_last(mp4file,os.sep)+1:])
-		shutil.copy(mp4file, not_dir)
+	# Check to see if it fits the pattern for renaming based on name
+	if mp4file[find_last(mp4file,os.sep)+1:][:2] == '20' and mp4file[find_last(mp4file,os.sep)+1:][8] == '_':
+		# Develop new name
+		newName = mp4file[find_last(mp4file,os.sep)+1:][:4]+'-'+mp4file[find_last(mp4file,os.sep)+1:][4:6]+'-'+mp4file[find_last(mp4file,os.sep)+1:][6:8]+' '+mp4file[find_last(mp4file,os.sep)+1:][9:]
+		# Check directory if it already exists
+		if os.path.exists(dst_dir+newName) == False:
+			print('Renaming '+newName)
+			shutil.copy2(mp4file, dst_dir+newName)
+	else:	
+		if os.path.exists(dst_dir+os.path.basename(os.path.normpath(mp4file))) == False:
+			print('Copying '+mp4file[find_last(mp4file,os.sep)+1:])
+			shutil.copy(mp4file, not_dir)
 
 for t3gpfile in glob.iglob(os.path.join(src_dir+os.sep, "*.3gp")):
-# for movfile in glob.iglob(os.path.join(src_dir, "*/*.mov")):
     if os.path.exists(dst_dir+os.path.basename(os.path.normpath(t3gpfile))) == False:
 		print('Copying '+t3gpfile[find_last(t3gpfile,os.sep)+1:])
 		shutil.copy(t3gpfile, not_dir)
 
 for giffile in glob.iglob(os.path.join(src_dir+os.sep, "*.gif")):
-# for movfile in glob.iglob(os.path.join(src_dir, "*/*.mov")):
     if os.path.exists(dst_dir+os.path.basename(os.path.normpath(giffile))) == False:
 		print('Copying '+giffile[find_last(giffile,os.sep)+1:])
 		shutil.copy(giffile, not_dir)
+
+# Check if you can get exif info **
+for mtsfile in glob.iglob(os.path.join(src_dir+os.sep, "*.mts")):
+    if os.path.exists(dst_dir+os.path.basename(os.path.normpath(mtsfile))) == False:
+		print('Copying '+mtsfile[find_last(mtsfile,os.sep)+1:])
+		shutil.copy(mtsfile, not_dir)
+
+# Check if you can get exif info **
+for avifile in glob.iglob(os.path.join(src_dir+os.sep, "*.avi")):
+    if os.path.exists(dst_dir+os.path.basename(os.path.normpath(avifile))) == False:
+		print('Copying '+avifile[find_last(avifile,os.sep)+1:])
+		shutil.copy(avifile, not_dir)
 
 # Move and rename files
 # -------------------------------------------------
 
 # Get file list including iPhone, CanonPowerShot, and Nikon1 files
 Files = glob.glob(copy_dir+"*.jpg")
+# Files = glob.glob(copy_dir+"*.mts")
 
 # Open array to build dictionary
 result = range(len(Files))
