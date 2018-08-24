@@ -110,29 +110,29 @@ for mp4file in glob.iglob(os.path.join(src_dir+os.sep, "*.mp4")):
 			print('Renaming '+newName)
 			shutil.copy2(mp4file, dst_dir+newName)
 	else:	
-		if os.path.exists(dst_dir+os.path.basename(os.path.normpath(mp4file))) == False:
+		if os.path.exists(not_dir+os.path.basename(os.path.normpath(mp4file))) == False:
 			print('Copying '+mp4file[find_last(mp4file,os.sep)+1:])
 			shutil.copy(mp4file, not_dir)
 
 for t3gpfile in glob.iglob(os.path.join(src_dir+os.sep, "*.3gp")):
-    if os.path.exists(dst_dir+os.path.basename(os.path.normpath(t3gpfile))) == False:
+    if os.path.exists(not_dir+os.path.basename(os.path.normpath(t3gpfile))) == False:
 		print('Copying '+t3gpfile[find_last(t3gpfile,os.sep)+1:])
 		shutil.copy(t3gpfile, not_dir)
 
 for giffile in glob.iglob(os.path.join(src_dir+os.sep, "*.gif")):
-    if os.path.exists(dst_dir+os.path.basename(os.path.normpath(giffile))) == False:
+    if os.path.exists(not_dir+os.path.basename(os.path.normpath(giffile))) == False:
 		print('Copying '+giffile[find_last(giffile,os.sep)+1:])
 		shutil.copy(giffile, not_dir)
 
 # Check if you can get exif info **
 for mtsfile in glob.iglob(os.path.join(src_dir+os.sep, "*.mts")):
-    if os.path.exists(dst_dir+os.path.basename(os.path.normpath(mtsfile))) == False:
+    if os.path.exists(not_dir+os.path.basename(os.path.normpath(mtsfile))) == False:
 		print('Copying '+mtsfile[find_last(mtsfile,os.sep)+1:])
 		shutil.copy(mtsfile, not_dir)
 
 # Check if you can get exif info **
 for avifile in glob.iglob(os.path.join(src_dir+os.sep, "*.avi")):
-    if os.path.exists(dst_dir+os.path.basename(os.path.normpath(avifile))) == False:
+    if os.path.exists(not_dir+os.path.basename(os.path.normpath(avifile))) == False:
 		print('Copying '+avifile[find_last(avifile,os.sep)+1:])
 		shutil.copy(avifile, not_dir)
 
