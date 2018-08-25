@@ -3,7 +3,8 @@
 # With Notepad++, use F5 then copy this into box
 # C:\Python27\python.exe -i "$(FULL_CURRENT_PATH)"
 
-# Written by Casey Gierke of AlbuGierke Environmental Solutions
+# Written by Casey Gierke 
+# of AlbuGierke Environmental Solutions
 # Updated 2018-05-08
 # Updated 2018-08-20
 
@@ -21,6 +22,7 @@ from distutils.dir_util import copy_tree
 import Tkinter 
 from Tkinter import Tk
 from tkFileDialog import askdirectory
+import datetime
 
 # -------------------------------------------------
 # DEFINE FUNCTIONS
@@ -124,17 +126,35 @@ for giffile in glob.iglob(os.path.join(src_dir+os.sep, "*.gif")):
 		print('Copying '+giffile[find_last(giffile,os.sep)+1:])
 		shutil.copy(giffile, not_dir)
 
-# Check if you can get exif info **
 for mtsfile in glob.iglob(os.path.join(src_dir+os.sep, "*.mts")):
-    if os.path.exists(not_dir+os.path.basename(os.path.normpath(mtsfile))) == False:
-		print('Copying '+mtsfile[find_last(mtsfile,os.sep)+1:])
-		shutil.copy(mtsfile, not_dir)
+	# Check to see if it has creation information
+	if os.path.getmtime(mtsfile):
+		timeStamp = datetime.datetime.fromtimestamp(os.path.getmtime(mtsfile)).isoformat()
+		# Develop new name
+		newName = timeStamp[:10]+' '+timeStamp[11:13]+timeStamp[14:16]+timeStamp[17:]+'.mts'
+		# Check directory if it already exists
+		if os.path.exists(dst_dir+newName) == False:
+			print('Renaming '+newName)
+			shutil.copy2(mtsfile, dst_dir+newName)
+	else:
+		if os.path.exists(not_dir+os.path.basename(os.path.normpath(mtsfile))) == False:
+			print('Copying '+mtsfile[find_last(mtsfile,os.sep)+1:])
+			shutil.copy(mtsfile, not_dir)
 
-# Check if you can get exif info **
 for avifile in glob.iglob(os.path.join(src_dir+os.sep, "*.avi")):
-    if os.path.exists(not_dir+os.path.basename(os.path.normpath(avifile))) == False:
-		print('Copying '+avifile[find_last(avifile,os.sep)+1:])
-		shutil.copy(avifile, not_dir)
+	# Check to see if it has creation information
+	if os.path.getmtime(avifile):
+		timeStamp = datetime.datetime.fromtimestamp(os.path.getmtime(avifile)).isoformat()
+		# Develop new name
+		newName = timeStamp[:10]+' '+timeStamp[11:13]+timeStamp[14:16]+timeStamp[17:]+'.avi'
+		# Check directory if it already exists
+		if os.path.exists(dst_dir+newName) == False:
+			print('Renaming '+newName)
+			shutil.copy2(avifile, dst_dir+newName)
+	else:
+		if os.path.exists(not_dir+os.path.basename(os.path.normpath(avifile))) == False:
+			print('Copying '+avifile[find_last(avifile,os.sep)+1:])
+			shutil.copy(avifile, not_dir)
 
 # Move and rename files
 # -------------------------------------------------
