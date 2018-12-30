@@ -8,6 +8,22 @@
 # Updated 2018-05-08
 # Updated 2018-08-20
 
+# ***Need to update program by putting the whole process
+# into a loop that moves through all known file types.  
+# Once the loop structure is in place, then have to have 
+# an order of operations.  For now this looks like:
+	# Determine if the file has exif info
+		# Rename if it does
+	# If not, examine the name and test if it already
+	# has timestamp info
+		# Rename by reformatting if it does
+	# If neither, rename based on the modified info 
+	# for the file. 
+# In this way, every file should recieve a timestamp 
+# name even if it is not correct.  Older photos will 
+# just have to be kept in their folders to identify
+# when they are from. ***
+
 # -------------------------------------------------
 # IMPORTS
 # -------------------------------------------------
